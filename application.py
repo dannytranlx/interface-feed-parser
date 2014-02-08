@@ -14,7 +14,7 @@ def fetch_posts():
 	url_interface = "http://interfaceets.wordpress.com/feed/"
 	webparser = []
 	data = ""
-	snippet_len = 350
+	snippet_len = 400
 
 	try:
 		webparser = BeautifulSoup(urllib2.urlopen(url_interface).read(), "xml")
@@ -29,7 +29,9 @@ def fetch_posts():
 			subtitles_len = post.encoded.string.index('</h6>') + len('</h6>')
 			
 			data += post.encoded.string[:subtitles_len].replace('<br />', ' - ')
-			data += post.encoded.string[subtitles_len:snippet_len + subtitles_len]
+			data += post.encoded.string[subtitles_len:snippet_len + subtitles_len] + '...'
+
+			data += '</b></p>'
 
 	if data:
 		return data
