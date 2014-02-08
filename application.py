@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 from bs4 import BeautifulSoup
 import urllib2
 import re
@@ -6,6 +7,9 @@ import re
 app = Flask(__name__)
 
 @app.route("/")
+def index():
+	return render_template('index.html', data=fetch_posts())
+
 def fetch_posts():
 	url_interface = "http://interfaceets.wordpress.com/feed/"
 	webparser = []
@@ -33,4 +37,5 @@ def fetch_posts():
 	return 'yolo'
 
 if __name__ == "__main__":
+	app.debug = True
 	app.run()
