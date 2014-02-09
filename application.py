@@ -2,13 +2,12 @@ from flask import Flask
 from flask import render_template
 from bs4 import BeautifulSoup
 import urllib2
-import re
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-	return render_template('index.html', data=fetch_posts())
+	return render_template('index.html', data = fetch_posts())
 
 def fetch_posts():
 	url_interface = "http://interfaceets.wordpress.com/feed/"
@@ -19,7 +18,7 @@ def fetch_posts():
 	try:
 		webparser = BeautifulSoup(urllib2.urlopen(url_interface).read(), "xml")
 	except:
-		print 'Error: Cannot parse url'
+		print 'Erreur: Impossible de lire le fil RSS'
 
 	if webparser:
 		posts = webparser.channel.findAll('item')
@@ -36,8 +35,7 @@ def fetch_posts():
 	if data:
 		return data
 
-	return 'yolo'
+	return 'Aucun article trouv&eacute;'
 
 if __name__ == "__main__":
-	app.debug = True
 	app.run()
