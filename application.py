@@ -28,19 +28,12 @@ def fetch_posts():
 			subtitles_len = post.encoded.string.index('</h6>') + len('</h6>')
 			
 			data += post.encoded.string[:subtitles_len].replace('<br />', ' - ')
-			data += close_html(post.encoded.string[subtitles_len:snippet_len + subtitles_len])
+			data += BeautifulSoup(post.encoded.string[subtitles_len:snippet_len + subtitles_len]).prettify()
 
 	if data:
 		return data
 
 	return 'Aucun article trouv&eacute;'
-
-def close_html(post):
-	tags = ['em', 'strong', 'b', 'i', 'p', 'a']
-	for tag in tags:
-		if post.count('<' + tag + '>') != post.count('</' + tag + '>'):
-			post += '</' + tag + '>'
-	return post
 
 if __name__ == "__main__":
 	app.run()
